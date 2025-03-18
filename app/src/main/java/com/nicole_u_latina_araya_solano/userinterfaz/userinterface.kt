@@ -246,6 +246,10 @@ fun ItemCard(
                 text = item.name,
                 modifier = Modifier.weight(1f)
             )
+            Text(
+                text = "${item.square_meters}",
+                modifier = Modifier.weight(1f)
+            )
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = "Editar",

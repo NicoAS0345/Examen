@@ -18,6 +18,8 @@ fun AddItemScreen(
     viewModel: HouseNicoleViewModel = hiltViewModel()
 ) {
     var itemName by remember { mutableStateOf("") } // Estado para el nombre del ítem
+    var description by remember { mutableStateOf("") }
+    var squiare_meters by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -28,7 +30,25 @@ fun AddItemScreen(
         OutlinedTextField(
             value = itemName,
             onValueChange = { itemName = it },
-            label = { Text("Nombre del ítem") },
+            label = { Text("Nombre de la casa") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = description,
+            onValueChange = { description = it },
+            label = { Text("Descripcion de la casa") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = squiare_meters,
+            onValueChange = { squiare_meters = it },
+            label = { Text("Metros cuadrados") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -38,9 +58,15 @@ fun AddItemScreen(
         Button(
             onClick = {
                 if (itemName.isNotBlank()) {
+                    val square_meters_double = squiare_meters.toDoubleOrNull() ?: 0.0 // Convertir a Double
+
                     // Crear un nuevo ítem y agregarlo a la base de datos
-                    val newItem = HouseNicole(name = itemName)
-                    viewModel.insert(newItem)
+                    val nuevaHouse = HouseNicole(
+                        name = itemName,
+                        description = description,
+                        square_meters = square_meters_double,
+                    )
+                    viewModel.insert(nuevaHouse)
                     navController.popBackStack() // Regresar a la pantalla anterior
                 }
             },
