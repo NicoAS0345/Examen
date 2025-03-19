@@ -17,6 +17,7 @@ fun AddItemScreen(
     navController: NavController,
     viewModel: HouseNicoleViewModel = hiltViewModel()
 ) {
+    //Se establecen los atributos que se van a capturar
     var itemName by remember { mutableStateOf("") } // Estado para el nombre del ítem
     var description by remember { mutableStateOf("") }
     var squiare_meters by remember { mutableStateOf("") }
@@ -36,6 +37,7 @@ fun AddItemScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        //Campo para la descripcion
         OutlinedTextField(
             value = description,
             onValueChange = { description = it },
@@ -45,6 +47,7 @@ fun AddItemScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        //Campo para los metros cuadrados
         OutlinedTextField(
             value = squiare_meters,
             onValueChange = { squiare_meters = it },
@@ -60,7 +63,7 @@ fun AddItemScreen(
                 if (itemName.isNotBlank()) {
                     val square_meters_double = squiare_meters.toDoubleOrNull() ?: 0.0 // Convertir a Double
 
-                    // Crear un nuevo ítem y agregarlo a la base de datos
+                    // Crear una nueva casa y lo agrega a la base de datos
                     val nuevaHouse = HouseNicole(
                         name = itemName,
                         description = description,

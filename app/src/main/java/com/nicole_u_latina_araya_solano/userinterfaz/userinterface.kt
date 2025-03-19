@@ -56,20 +56,22 @@ import kotlinx.coroutines.launch
 import kotlin.math.abs
 import androidx.compose.ui.text.TextStyle
 
-
+//Esta es la pantalla principal que muestra la lista de los elementos
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ItemListScreen(
-    navController: NavController = rememberNavController(), // NavController para navegar
+    navController: NavController = rememberNavController(), // Controla la navegacion
     viewModel: HouseNicoleViewModel = hiltViewModel()
 ) {
-    // Observamos el LiveData usando observeAsState
+    // Aqui se obtiene la lista de elementos desde el viewmodel
     val items by viewModel.allItems.observeAsState(emptyList<HouseNicole>())
 
+    //Se establece si un elemento se selecciona o si se desliza la pantalla
     var itemToDelete by remember { mutableStateOf<HouseNicole?>(null) }
     var cancelSwipeAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     var isRefreshing by remember { mutableStateOf(false) }
 
+    //Esto es para el gesto de refrescar la pantalla, para "actualizar" los elementos
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing,
         onRefresh = {
@@ -78,6 +80,7 @@ fun ItemListScreen(
         }
     )
 
+    //Este es el dialogo de confirmación para eliminar los elementos
     if (itemToDelete != null) {
         AlertDialog(
             onDismissRequest = { itemToDelete = null }, // Cierra el diálogo
@@ -109,6 +112,7 @@ fun ItemListScreen(
         )
     }
 
+    //Aquí se define la estructura principal de la pantalla
     Scaffold(
         floatingActionButton = {
             // Botón flotante con ícono de "agregar"
@@ -133,7 +137,7 @@ fun ItemListScreen(
         ) {
             // Mostramos el número de cartas seleccionadas
             Text(
-                text = "Cartas seleccionadas: ${items.count { it.isSelected }}",
+                text = "Casas seleccionadas: ${items.count { it.isSelected }}",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .padding(16.dp)
@@ -147,8 +151,10 @@ fun ItemListScreen(
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth()
             ) {
-                Text("Eliminar todos los elementos")
+                Text("Eliminar todos las casas")
             }
+
+            //Este es el contenedor principal para todos los elementos de la lista
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -188,6 +194,7 @@ fun ItemListScreen(
     }
 }
 
+//Estas son las tarjetas de cada uno de los elementos
 @Composable
 fun ItemCard(
     item: HouseNicole,
@@ -196,7 +203,7 @@ fun ItemCard(
     onEditClick: () -> Unit,
     onCancelSwipe: (() -> Unit) -> Unit
 ) {
-    val offsetX = remember { Animatable(0f) } // Controla la animación del desplazamiento
+    val offsetX = remember { Animatable(0f) } // Controla la animación del desplazamiento horizontal
     val scope = rememberCoroutineScope()
 
 
@@ -262,6 +269,7 @@ fun ItemCard(
 
         }
     }
+    //Aqui se restablece la posicion de la tarjeta si es que se cancela el desplazamiento
     LaunchedEffect(key1 = item) {
         onCancelSwipe {
             scope.launch { offsetX.animateTo(0f, tween(300)) }
@@ -272,11 +280,11 @@ fun ItemCard(
     }
 }
 
-
+//Este es un preview de la pantalla
 @Preview(showBackground = true)
 @Composable
 fun ItemListScreenPreview() {
     HouseNicoleTheme {
-        ItemListScreen() // Previsualización de la pantalla
+        ItemListScreen()
     }
 }

@@ -35,6 +35,7 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+//Se genera el tema que va a tener la aplicacion y los colores que va a tener
 private val GrayColorScheme = lightColorScheme(
     background = Color(0xFFBDBDBD),
     surface = Color(0xFFBDBDBD),
@@ -43,6 +44,7 @@ private val GrayColorScheme = lightColorScheme(
     onSurface = Color.Black
 )
 
+//Aqui se establece el tema que se genero antes, se establece como el esquema de colores
 @Composable
 fun HouseNicoleTheme(
     content: @Composable () -> Unit

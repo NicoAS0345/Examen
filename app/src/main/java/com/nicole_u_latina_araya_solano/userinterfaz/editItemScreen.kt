@@ -29,15 +29,18 @@ fun EditItemScreen(
     viewModel: HouseNicoleViewModel = hiltViewModel(),
     navController: NavController
 ) {
-
+    //Se establecen los atributos que se van a capturar
     var itemName by remember { mutableStateOf(item.name) }
     var description by remember { mutableStateOf(item.description) }
-    var square_meters by remember { mutableStateOf(item.square_meters.toString()) }
+    var square_meters by remember { mutableStateOf(item.square_meters.toString()) } // Se pasa a string para que no de problemas al mostrarlo en el textfield
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
+        //Se capturan y se muestran los atributos que se tiene guardados en la entidad
         TextField(
             value = itemName,
             onValueChange = { itemName = it },
@@ -65,11 +68,13 @@ fun EditItemScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        //Boton para guardar los cambios
         Button(
             onClick = {
-                val square_meters_double = square_meters.toDoubleOrNull() ?: 0.0 // Convertir a Double
+                //Se pasa a double de nuevo para guardarlo de manera correcta en la base de datos
+                val square_meters_double = square_meters.toDoubleOrNull() ?: 0.0
 
-                // Actualizamos el ítem en la base de datos
+                // Actualizamos la casa en la base de datos
                 viewModel.update(item.copy(
                     name = itemName.replace("+", " "),//para que los espacios no se guarden como +
                     description = description.replace("+", " "),
