@@ -54,6 +54,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntOffset
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import androidx.compose.ui.text.TextStyle
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
