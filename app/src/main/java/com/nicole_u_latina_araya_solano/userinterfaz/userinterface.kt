@@ -41,6 +41,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -264,6 +265,16 @@ fun ItemCard(
                 contentDescription = "Editar",
                 modifier = Modifier
                     .clickable { onEditClick() }
+                    .padding(start = 8.dp)
+            )
+
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Eliminar",
+                modifier = Modifier
+                    .clickable {
+                        onSwipe() //llama a la función de borrar
+                    }
                     .padding(start = 8.dp)
             )
 
